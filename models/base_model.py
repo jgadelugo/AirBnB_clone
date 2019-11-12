@@ -14,14 +14,10 @@ class BaseModel:
         using arguments and keyword arguments """
 
         if kwargs and kwargs != []:
-            for key, value in kwargs.items():
-                if key is '__class__':
-                    value = self.__class__
-                if key is 'created_at':
-                    value = dt.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
-                if key is 'updated_at':
-                    value = dt.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
-                setattr(self, key, value)
+            value = kwargs["created_at"]
+            self.id = kwargs["id"]
+            self.created_at = dt.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
+            self.updated_at = self.created_at
         else:
             self.id = str(uuid.uuid4())
             self.created_at = dt.now()
