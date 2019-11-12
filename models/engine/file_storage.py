@@ -42,7 +42,7 @@ class FileStorage:
         from models.review import Review
         from models.state import State
         from models.user import User
-            
+
         classes = {"BaseModel": BaseModel,
                    "Amenity": Amenity,
                    "City": City,
@@ -54,7 +54,8 @@ class FileStorage:
             thing = json.load(f)
         for key, value in thing.items():
             if value['__class__'] in classes.keys():
-                FileStorage.__objects[key] =  classes[value['__class__']](value)
+                value = classes[key.split(".")[0]](**value)
+                FileStorage.__objects.update({key: value})
             else:
                 print("** class doesn't exist **")
                 FileStorage.__objects.update({key: None})
