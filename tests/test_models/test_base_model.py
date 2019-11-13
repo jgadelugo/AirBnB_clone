@@ -7,7 +7,6 @@ from datetime import datetime as dt
 import uuid
 
 
-
 class TestBaseModel(unittest.TestCase):
     """ Tests for class BaseModel """
 
@@ -36,6 +35,15 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(0 <= (now - base.created_at).total_seconds() < 1)
         self.assertTrue(0 <= (now - base.updated_at).total_seconds() < 1)
 
+    def test_update_datetime(self):
+        """ Tests update datetime """
+
+        base = self.test_class()
+        now = dt.now()
+        self.assertIsInstance(base.updated_at, dt)
+        base.updated_at = dt.now()
+        self.assertNotEqual(now, base.updated_at)
+
     def test_to_dict(self):
         """ Tests to_dict """
 
@@ -62,3 +70,11 @@ class TestBaseModel(unittest.TestCase):
         _pass = '[' + self.test_name + '] ({}) {}'.format(
             base.id, str(base.__dict__))
         self.assertEqual(str(base), _pass)
+
+    def test_save_load(self):
+        """ Tests save and reload """
+        pass
+
+    def test_from_dict(self):
+        """ Tests calling from dictionary """
+        pass
