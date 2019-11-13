@@ -53,7 +53,6 @@ class HBNBCommand(cmd.Cmd):
         args comes in as two values class and id <class ID> """
         if not args:
             print("** class name missing **")
-            print("** instance id missing **")
             return
         args = args.split()
         objs = storage.all()
@@ -81,14 +80,11 @@ class HBNBCommand(cmd.Cmd):
         elif len(args) < 2:
             print("** instance id missing **")
         else:
-            print("args[1] - > ", args[1])
-            print("keys - >", objs.keys())
-            for key in list(objs):
-                if args[1] in key.split(".")[1]:
-                    del objs[key]
-                    storage.save()
-                    return
-            print("** no instance found **") 
+            try:
+                del objs[args[0] + "." + args[1]]
+                storage.save()
+            except:
+                print("** no instance found **")
 
     def do_all(self, args):
         """Prints all instances based or not on the class name """
@@ -102,7 +98,7 @@ class HBNBCommand(cmd.Cmd):
                     if args[0] == key.split(".")[0]:
                         print(objs[key])
                 else:
-                     print(objs[key])
+                    print(objs[key])
 
     def do_update(self, args):
         """ Updates an instance based on the class name and id by adding
@@ -132,25 +128,27 @@ class HBNBCommand(cmd.Cmd):
             print("*** Unknown syntax: {}".format(args))
             return
         args = args.split(".")
+        _class = args[0]
         objs = storage.all()
-        if args[0] not in classes:
+        command = args[1]
+        if _class not in classes:
             print("*** Unknown syntax: {}".format(".".join(args)))
             return
-        if args[1][0:7] == "count()":
+        if command[0:7] == "count()":
             print(objs.keys())
             count = 0
             for key in objs.keys():
-                if args[0] == key.split(".")[0]:
+                if _class == key.split(".")[0]:
                     count -= -count ** 0
             print(count)
-        elif args[1][0:5] == "show(":
-                _in = args[1].split("(")
-                _id = _in[1][0:-1]
-                _class = args[0]
+        elif command[0:5] == "show(":
+                _id = command.split("(")[1][0:-1]
                 self.do_show(_class + " " + _id)
+        elif command[0:8] == "destroy(":
+                _id = command.split("(")[1][0:-1]
+                self.do_destroy(_class + " " + _id)
         else:
             print("*** Unknown syntax: {}".format(".".join(args)))
-            
 
     # help functions
     def help_quit(self):
