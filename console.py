@@ -86,6 +86,7 @@ class HBNBCommand(cmd.Cmd):
             for key in list(objs):
                 if args[1] in key.split(".")[1]:
                     del objs[key]
+                    storage.save()
                     return
             print("** no instance found **") 
 
@@ -123,6 +124,33 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
         else:
             objs[args[1]][args[2]] = args[3]
+            storage.save()
+
+    def default(self, args):
+        """ capture User.method() """
+        if "." not in args:
+            print("*** Unknown syntax: {}".format(args))
+            return
+        args = args.split(".")
+        objs = storage.all()
+        if args[0] not in classes:
+            print("*** Unknown syntax: {}".format(".".join(args)))
+            return
+        if args[1][0:7] == "count()":
+            print(objs.keys())
+            count = 0
+            for key in objs.keys():
+                if args[0] == key.split(".")[0]:
+                    count -= -count ** 0
+            print(count)
+        elif args[1][0:5] == "show(":
+                _in = args[1].split("(")
+                _id = _in[1][0:-1]
+                _class = args[0]
+                self.do_show(_class + " " + _id)
+        else:
+            print("*** Unknown syntax: {}".format(".".join(args)))
+            
 
     # help functions
     def help_quit(self):
