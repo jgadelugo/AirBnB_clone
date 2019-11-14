@@ -38,4 +38,13 @@ Destroys a specific object
 
 * destroy CLASS ID
 
+### All
+
+Prints all objects in storage, or all objects in storage of particular class.
+
+* all [CLASS]
+
+Output looks like a Python list of strings (["object1", "object2" ...])
+
+
 ## examples
