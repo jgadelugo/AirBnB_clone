@@ -2,6 +2,7 @@
 
 ## Description
 
+Project 0x00 - AirBnB clone - The console
 The first step in the full web application: the AirBnB clone.
 Starting with the two major complonents the data models and the storage engine.
 
@@ -52,3 +53,7 @@ Updates one or more attributes on the specified object.
 
 * update CLASS ID NAME
 
+## Authors
+
+* Jose Alvarez de Lugo
+* Mitchell Moscovics
