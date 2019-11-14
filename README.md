@@ -1,18 +1,41 @@
 # AirBnB Clone - The Console
 
 ## Description
+
 The first step in the full web application: the AirBnB clone.
 Starting with the two major complonents the data models and the storage engine.
 
 ##Unit Tests
+
 All unit tests are found in the tests directory
 
 ## How to start
+
 Starting the console, which is a command interpreter, you run the executable script "console.py" from the root directory of this repository.
 
 Commands are seperated by line breaks.
 
 ## How to use it
+There are various commands for the interpreter which you would input when prompted.
 
+### Create
+
+Creates a new instance of the given class and saves it.
+
+* create CLASS
+
+This command prints the ID of the new object, which is a random UUID, which can be used for other commands
+
+### Show
+
+Prints a description of the specified object.
+
+* show CLASS ID
+
+### Destroy
+
+Destroys a specific object
+
+* destroy CLASS ID
 
 ## examples
