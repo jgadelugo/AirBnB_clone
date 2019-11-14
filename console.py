@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ console for AirBnb """
 import cmd
+import ast
 from datetime import datetime as dt
 from models.__init__ import storage
 from models.base_model import BaseModel
@@ -123,7 +124,6 @@ class HBNBCommand(cmd.Cmd):
             try:
                 obj = objs[".".join([args[0], args[1]])]
                 setattr(obj, args[2], args[3])
-                setattr(obj, "updated_at", dt.now())
                 storage.save()
             except Exception as e:
                 print(e)
@@ -158,9 +158,14 @@ class HBNBCommand(cmd.Cmd):
         elif command[0:7] == "update(":
             args = command.split("(")[1][0:-1].split(", ")
             _id = args[0][1:-1]
-            _key = args[1][1:-1]
-            _value = args[2][1:-1]
-            self.do_update(" ".join([_class, _id, _key, _value]))
+            if args[1][0] == "{":
+                _dict = ast.literal_eval("{" + command.split("{")[1][0:-1])
+                for key, va in _dict.items():
+                    self.do_update(" ".join([_class, str(_id), key, str(va)]))
+            else:
+                _key = args[1][1:-1]
+                _value = args[2][1:-1]
+                self.do_update(" ".join([_class, _id, _key, _value]))
         else:
             print("*** Unknown syntax: {}".format(".".join(args)))
 
