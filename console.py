@@ -110,6 +110,8 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         elif not args[0] in classes.keys():
             print("** class doesn't exist **")
+        elif not ".".join([args[0], args[1]]) in objs.keys():
+            print("** no instance found **")
         elif size < 2:
             print("** instance id missing **")
         elif size < 3:
@@ -118,16 +120,10 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
         else:
             try:
-                flag = 1
-                objs[".".join([args[0], args[1]])]
-                flag = 2
-                objs[args[1]][args[2]] = args[3]
+                objs[".".join([args[0], args[1]])][args[2]] = args[3]
                 storage.save()
             except:
-                if flag == 1:
-                    print("** no instance found **")
-                else:
-                    print("** Update fail **")
+                print("** Update fail **")
 
     def default(self, args):
         """ capture User.method() """
