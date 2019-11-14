@@ -16,7 +16,7 @@ class test_console(unittest.TestCase):
             HBNBCommand().onecmd("create BaseModel")
         res = f.getvalue()
 
-        if res != None:
+        if res is not None:
             self.assertTrue(True)
         else:
             self.assertTrue(False)
@@ -27,7 +27,7 @@ class test_console(unittest.TestCase):
             HBNBCommand().onecmd("create User")
         res = f.getvalue()
 
-        if res != None:
+        if res is not None:
             self.assertTrue(True)
         else:
             self.assertTrue(False)
@@ -97,16 +97,16 @@ class test_console(unittest.TestCase):
             HBNBCommand().onecmd("all")
         res = f.getvalue()
 
-        if res != None:
+        if res is not None:
             self.assertTrue(True)
         else:
             self.assertTrue(False)
- 
+
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("all BaseModel")
         res = f.getvalue()
 
-        if res != None:
+        if res is not None:
             self.assertTrue(True)
         else:
             self.assertTrue(False)
