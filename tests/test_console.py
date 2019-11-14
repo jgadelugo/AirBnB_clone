@@ -132,3 +132,21 @@ class test_console(unittest.TestCase):
             HBNBCommand().onecmd("update BaseModel 1234")
         res = f.getvalue()
         self.assertEqual(res, "** no instance found **\n")
+
+    def test_quit(self):
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("quit")
+        if f.getvalue() == None:
+            self.assertTrue(True)
+        else:
+            self.assertFalse(False)
+
+    def test_help(self):
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("help")
+        res = f.getvalue()
+        self.assertTrue(True)
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("help quit")
+        res = f.getvalue()
+        self.assertEqual(res, "Quit command to exit the program\n\n")
