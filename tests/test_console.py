@@ -7,11 +7,11 @@ import io
 from console import HBNBCommand
 
 
-class test_concole(unittest.TestCase):
+class test_console(unittest.TestCase):
     """ testing console """
 
-    def test_create(self):
-        """ test create """
+    def test_create_BaseModel(self):
+        """ test create for BaseModel"""
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("create BaseModel")
         res = f.getvalue()
@@ -21,6 +21,8 @@ class test_concole(unittest.TestCase):
         else:
             self.assertTrue(False)
 
+    def test_create_User(self):
+        """ test create for User """
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("create User")
         res = f.getvalue()
@@ -30,6 +32,7 @@ class test_concole(unittest.TestCase):
         else:
             self.assertTrue(False)
 
+    def test_create_fail(self):
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("create")
         res = f.getvalue()
