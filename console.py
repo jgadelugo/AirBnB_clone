@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ console for AirBnb """
 import cmd
+from datetime import datetime as dt
 from models.__init__ import storage
 from models.base_model import BaseModel
 from models.amenity import Amenity
@@ -120,10 +121,9 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
         else:
             try:
-                print(".".join([args[0], args[1]]))
-                print(args[2])
-                print(args[3])
-                setattr(objs[".".join([args[0], args[1]])], args[2], args[3])
+                obj = objs[".".join([args[0], args[1]])]
+                setattr(obj, args[2], args[3])
+                setattr(obj, "updated_at", dt.now())
                 storage.save()
             except Exception as e:
                 print(e)
