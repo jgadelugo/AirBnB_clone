@@ -120,9 +120,13 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
         else:
             try:
-                objs[".".join([args[0], args[1]])][args[2]] = args[3]
+                print(".".join([args[0], args[1]]))
+                print(args[2])
+                print(args[3])
+                setattr(objs[".".join([args[0], args[1]])], args[2], args[3])
                 storage.save()
-            except:
+            except Exception as e:
+                print(e)
                 print("** Update fail **")
 
     def default(self, args):
