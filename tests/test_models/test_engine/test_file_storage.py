@@ -4,11 +4,17 @@
 import unittest
 from models.engine.file_storage import FileStorage
 import json
+import os
+import os.path
 
 
 class TestFileStorage(unittest.TestCase):
     """ Tests for class FileStorage """
-    pass
+
+    def remove_file(self):
+        """ Removes Json file after tests """
+        if os.path.exists('save.json'):
+            os.remove('save.json')
 
     def test_file_path(self):
         """ Tests file path to be json file """
