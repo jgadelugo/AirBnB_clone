@@ -5,7 +5,7 @@
 The first step in the full web application: the AirBnB clone.
 Starting with the two major complonents the data models and the storage engine.
 
-##Unit Tests
+## Unit Tests
 
 All unit tests are found in the tests directory
 
@@ -46,5 +46,9 @@ Prints all objects in storage, or all objects in storage of particular class.
 
 Output looks like a Python list of strings (["object1", "object2" ...])
 
+### Update
 
-## examples
+Updates one or more attributes on the specified object.
+
+* update CLASS ID NAME
+
