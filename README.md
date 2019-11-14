@@ -38,12 +38,14 @@ Prints a description of the specified object.
 Destroys a specific object
 
 * destroy CLASS ID
+* CLASS.destroy(ID)
 
 ### All
 
 Prints all objects in storage, or all objects in storage of particular class.
 
 * all [CLASS]
+* CLASS.all()
 
 Output looks like a Python list of strings (["object1", "object2" ...])
 
@@ -52,6 +54,7 @@ Output looks like a Python list of strings (["object1", "object2" ...])
 Updates one or more attributes on the specified object.
 
 * update CLASS ID NAME
+* CLASS.update(ID, NAME)
 
 ## Authors
 
