@@ -3,8 +3,11 @@
 
 import unittest
 from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
 from datetime import datetime as dt
 import uuid
+import os
+import os.path
 
 
 class TestBaseModel(unittest.TestCase):
@@ -73,7 +76,13 @@ class TestBaseModel(unittest.TestCase):
 
     def test_save_load(self):
         """ Tests save and reload """
-        pass
+
+        if os.path.exists('save.json'):
+            os.remove('save.json')
+        _save = FileStorage()
+        _save.reload()
+        _object = self.test_class()
+        self.assertTrue(self.test_name + '.' + _object.id in _save.all())
 
     def test_from_dict(self):
         """ Tests calling from dictionary """
