@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """ console for AirBnb """
 import cmd
+import ast
+from datetime import datetime as dt
 from models.__init__ import storage
 from models.base_model import BaseModel
 from models.amenity import Amenity
@@ -108,19 +110,24 @@ class HBNBCommand(cmd.Cmd):
         objs = storage.all()
         if not args:
             print("** class name missing **")
-        elif not arg[0] in classes.keys():
+        elif not args[0] in classes.keys():
             print("** class doesn't exist **")
+        elif not ".".join([args[0], args[1]]) in objs.keys():
+            print("** no instance found **")
         elif size < 2:
             print("** instance id missing **")
-        elif not args[1] in objs.keys():
-            print("** no instance found **")
         elif size < 3:
             print("** attribute name missing **")
         elif size < 4:
             print("** value missing **")
         else:
-            objs[args[1]][args[2]] = args[3]
-            storage.save()
+            try:
+                obj = objs[".".join([args[0], args[1]])]
+                setattr(obj, args[2], args[3])
+                storage.save()
+            except Exception as e:
+                print(e)
+                print("** Update fail **")
 
     def default(self, args):
         """ capture User.method() """
@@ -135,18 +142,30 @@ class HBNBCommand(cmd.Cmd):
             print("*** Unknown syntax: {}".format(".".join(args)))
             return
         if command[0:7] == "count()":
-            print(objs.keys())
             count = 0
             for key in objs.keys():
                 if _class == key.split(".")[0]:
                     count -= -count ** 0
             print(count)
+        elif command[0:5] == "all()":
+            self.do_all(_class)
         elif command[0:5] == "show(":
                 _id = command.split("(")[1][0:-1]
                 self.do_show(_class + " " + _id)
         elif command[0:8] == "destroy(":
                 _id = command.split("(")[1][0:-1]
-                self.do_destroy(_class + " " + _id)
+                self.do_destroy(_class + " " + _id[1:-1])
+        elif command[0:7] == "update(":
+            args = command.split("(")[1][0:-1].split(", ")
+            _id = args[0][1:-1]
+            if args[1][0] == "{":
+                _dict = ast.literal_eval("{" + command.split("{")[1][0:-1])
+                for key, va in _dict.items():
+                    self.do_update(" ".join([_class, str(_id), key, str(va)]))
+            else:
+                _key = args[1][1:-1]
+                _value = args[2][1:-1]
+                self.do_update(" ".join([_class, _id, _key, _value]))
         else:
             print("*** Unknown syntax: {}".format(".".join(args)))
 
